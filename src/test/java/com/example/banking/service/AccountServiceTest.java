@@ -188,12 +188,12 @@ class AccountServiceTest {
     @Test
     void testTransferNullAccountNumber() {
         accountService.createAccount("ACC7", "User", 100);
-        NullPointerException e1 = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException e1 = assertThrows(IllegalArgumentException.class, () -> {
             accountService.transfer(null, "ACC7", 50);
         });
         assertEquals("Source account not found", e1.getMessage());
 
-        NullPointerException e2 = assertThrows(NullPointerException.class, () -> {
+        IllegalArgumentException e2 = assertThrows(IllegalArgumentException.class, () -> {
             accountService.transfer("ACC7", null, 50);
         });
         assertEquals("Destination account not found", e2.getMessage());

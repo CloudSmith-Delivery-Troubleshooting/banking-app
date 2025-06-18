@@ -44,10 +44,10 @@ public class AccountService {
 
     public void transfer(String fromAccount, String toAccount, double amount) {
         if (fromAccount == null) {
-            throw new NullPointerException("Source account not found");
+            throw new IllegalArgumentException("Source account not found");
         }
         if (toAccount == null) {
-            throw new NullPointerException("Destination account not found");
+            throw new IllegalArgumentException("Destination account not found");
         }
         if (fromAccount.equals(toAccount)) {
             throw new IllegalArgumentException("Cannot transfer to the same account");
