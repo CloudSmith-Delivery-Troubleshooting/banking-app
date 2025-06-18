@@ -16,12 +16,6 @@ public class AccountService {
         if (accountNumber == null || accountNumber.isEmpty()) {
             throw new IllegalArgumentException("Account number cannot be null or empty");
         }
-        if (holderName == null || holderName.isEmpty()) {
-            throw new IllegalArgumentException("Account holder name cannot be null or empty");
-        }
-        if (initialBalance < 0) {
-            throw new IllegalArgumentException("Initial balance cannot be negative");
-        }
         if (accountRepository.findByAccountNumber(accountNumber).isPresent()) {
             throw new IllegalArgumentException("Account number already exists");
         }
@@ -43,9 +37,6 @@ public class AccountService {
     }
 
     public void transfer(String fromAccount, String toAccount, double amount) {
-        if (fromAccount == null) {
-            throw new IllegalArgumentException("Source account not found");
-        }
         if (toAccount == null) {
             throw new IllegalArgumentException("Destination account not found");
         }
