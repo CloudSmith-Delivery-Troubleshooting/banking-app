@@ -21,6 +21,13 @@ public class Account {
     public double getBalance() { return balance; }
     public List<Transaction> getTransactions() { return transactions; }
 
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions.clear();
+        if (transactions != null) {
+            this.transactions.addAll(transactions);
+        }
+    }
+
     public void deposit(double amount) {
         if (amount <= 0) throw new IllegalArgumentException("Deposit amount must be positive");
         balance += amount;

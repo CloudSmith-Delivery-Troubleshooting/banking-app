@@ -10,10 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class AccountServiceTest {
 
     private AccountService accountService;
+    private AccountRepository accountRepository;
 
     @BeforeEach
     void setup() {
-        accountService = new AccountService(new AccountRepository());
+        accountRepository = new AccountRepository();
+        accountRepository.clearAll();
+        accountService = new AccountService(accountRepository);
     }
 
     @Test
@@ -22,7 +25,8 @@ class AccountServiceTest {
         assertEquals(100, acc.getBalance());
 
         accountService.deposit("ACC1", 50);
-        assertEquals(150, acc.getBalance());
+        Account updatedAcc = accountRepository.findByAccountNumber("ACC1").get();
+        assertEquals(150, updatedAcc.getBalance());
     }
 
     @Test
