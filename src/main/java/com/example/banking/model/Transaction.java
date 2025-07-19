@@ -13,6 +13,12 @@ public class Transaction {
         this.timestamp = LocalDateTime.now();
     }
 
+    public Transaction(String type, double amount, LocalDateTime timestamp) {
+        this.type = type;
+        this.amount = amount;
+        this.timestamp = timestamp;
+    }
+
     public String getType() { return type; }
     public double getAmount() { return amount; }
     public LocalDateTime getTimestamp() { return timestamp; }

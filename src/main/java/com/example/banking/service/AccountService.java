@@ -1,8 +1,10 @@
 package com.example.banking.service;
 
 import com.example.banking.model.Account;
+import com.example.banking.model.Transaction;
 import com.example.banking.repository.AccountRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class AccountService {
@@ -34,12 +36,16 @@ public class AccountService {
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found"));
         account.deposit(amount);
+        accountRepository.save(account);
+        accountRepository.saveTransaction(accountNumber, "DEPOSIT", amount, LocalDateTime.now());
     }
 
     public void withdraw(String accountNumber, double amount) {
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found"));
         account.withdraw(amount);
+        accountRepository.save(account);
+        accountRepository.saveTransaction(accountNumber, "WITHDRAWAL", amount, LocalDateTime.now());
     }
 
     public void transfer(String fromAccount, String toAccount, double amount) {
@@ -59,6 +65,10 @@ public class AccountService {
 
         source.withdraw(amount);
         destination.deposit(amount);
+        accountRepository.save(source);
+        accountRepository.save(destination);
+        accountRepository.saveTransaction(fromAccount, "WITHDRAWAL", amount, LocalDateTime.now());
+        accountRepository.saveTransaction(toAccount, "DEPOSIT", amount, LocalDateTime.now());
     }
 
     public double getBalance(String accountNumber) {
